@@ -1,0 +1,133 @@
+{
+  "modules": {
+    "lisk_chain": {
+      "modulePath": "node_modules/lisk-v3-dex-adapter",
+      "components": {
+        "logger": {
+          "logFileName": "logs/mainnet/lsk.log",
+          "consoleLogLevel": "error",
+          "fileLogLevel": "error"
+        }
+      },
+      "dexWalletAddress": "lskdx59zzxpdrpnqjhjt43hq3225fc9umoq7u7e4g",
+      "serviceURL": "https://service.lisk.com",
+      "rpcURL": "ws://3.83.154.68:8080/ws"
+    },
+    "capitalisk_chain": {
+      "moduleEnabled": true,
+      "modulePath": "node_modules/ldpos-chain",
+      "genesisPath": "../../genesis/mainnet/clsk-genesis.json",
+      "geneses": {
+        "0": 2,
+        "76000": 5
+      },
+      "components": {
+        "logger": {
+          "logFileName": "logs/mainnet/clsk.log",
+          "consoleLogLevel": "error",
+          "fileLogLevel": "error"
+        },
+        "dal": {
+          "libPath": "../ldpos-pg-dal",
+          "connection": {
+            "host": "127.0.0.1",
+            "user" : "postgres",
+            "password" : "password",
+            "database" : "capitalisk_main",
+            "port": "5432"
+          }
+        }
+      }
+    },
+    "lisk_dex_clsk_lsk": {
+      "moduleEnabled": true,
+      "modulePath": "node_modules/lisk-dex",
+      "passiveMode": true,
+      "tradeHistorySize": 100,
+      "dexEnabledFromHeight": 1,
+      "signatureBroadcastDelay": 15000,
+      "transactionSubmitDelay": 15000,
+      "multisigExpiry": 86400000,
+      "multisigExpiryCheckInterval": 60000,
+      "orderBookSnapshotFinality": 303,
+      "orderBookSnapshotFilePath": "./dex-snapshot-clsk-lsk.json",
+      "orderBookSnapshotBackupDirPath": "./dex-snapshot-clsk-lsk-backups",
+      "orderBookSnapshotBackupMaxCount": 20,
+      "baseChain": "lsk",
+      "priceDecimalPrecision": 4,
+      "apiDefaultPageLimit": 100,
+      "apiMaxPageLimit": 100,
+      "apiMaxFilterFields": 10,
+      "readBlocksInterval": 3000,
+      "components": {
+        "logger": {
+          "fileLogLevel": "error",
+          "consoleLogLevel": "error"
+        }
+      },
+      "chains": {
+        "lsk": {
+          "moduleAlias": "lisk_chain",
+          "chainCryptoLibPath": "../lisk-v3-chain-crypto",
+          "rpcURL": "ws://3.83.154.68:8080/ws",
+          "transactionStateFilePath": "./lisk-transaction-state.json",
+          "multisigAddress": "lskdx59zzxpdrpnqjhjt43hq3225fc9umoq7u7e4g",
+          "sharedPassphrase": "",
+          "passphrase": "",
+          "protocolExcludeReason": true,
+          "protocolMaxArgumentLength": 20,
+          "timestampMultiplier": 1000,
+          "requiredConfirmations": 2,
+          "orderHeightExpiry": 259200,
+          "readMaxBlocks": 100,
+          "readMaxTransactions": 100,
+          "exchangeFeeBase": "10000000",
+          "exchangeFeeRate": 0.007,
+          "minOrderAmount": "1000000000",
+          "dividendStartHeight": 0,
+          "dividendHeightInterval": 60480,
+          "dividendHeightOffset": 303,
+          "dividendRate": 0.9,
+          "dexDisabledFromHeight": null,
+          "dexMovedToAddress": "",
+          "minPartialTake": "100000000"
+        },
+        "clsk": {
+          "moduleAlias": "capitalisk_chain",
+          "chainCryptoLibPath": "../ldpos-chain-crypto",
+          "keyIndexDirPath": "./key-data",
+          "multisigAddress": "clsk00013c0a1ddec77791efbb0c6e386846331b20e5",
+          "memberAddress": "",
+          "passphrase": "",
+          "requiredConfirmations": 0,
+          "orderHeightExpiry": 259200,
+          "readMaxBlocks": 100,
+          "readMaxTransactions": 100,
+          "exchangeFeeBase": "20000000",
+          "exchangeFeeRate": 0.007,
+          "minOrderAmount": "1000000000",
+          "dividendStartHeight": 0,
+          "dividendHeightInterval": 20160,
+          "dividendHeightOffset": 101,
+          "dividendRate": 0.9,
+          "dexDisabledFromHeight": null,
+          "dexMovedToAddress": "",
+          "minPartialTake": "100000000"
+        }
+      }
+    },
+    "lisk_dex_clsk_lsk_http_api": {
+      "moduleEnabled": true,
+      "modulePath": "node_modules/lisk-dex-http-api",
+      "port": 8021,
+      "enableCORS": true,
+      "dexModuleAlias": "lisk_dex_clsk_lsk",
+      "components": {
+        "logger": {
+          "fileLogLevel": "error",
+          "consoleLogLevel": "error"
+        }
+      }
+    }
+  }
+}
